@@ -23,7 +23,12 @@ set(SOURCES
     MessageHandlers/ChatHandler.cpp
     SSLServer.cpp
     MessageBufferManager.cpp
-
+    MessageHandlers/CertifyHandler.cpp
+    MessageHandlers/KeepaliveHandler.cpp
+    UDPMessageHandlers/UdpBroadcastHandler.cpp
+    UDPMessageHandlers/UdpBroadcastZoneHandler.cpp
+    UDPMessageHandlers/UdpHandler.cpp
+    UDPMessageHandlers/UdpRegisterHandler.cpp
 )
 
 add_executable(server ${SOURCES})
