@@ -20,9 +20,9 @@ set(SOURCES
     Utility.cpp
     Zone.cpp
     ZoneManager.cpp
-    MessageHandlers/ChatHandler.cpp
     SSLServer.cpp
     MessageBufferManager.cpp
+    MessageHandlers/ChatHandler.cpp
     MessageHandlers/CertifyHandler.cpp
     MessageHandlers/KeepaliveHandler.cpp
     UDPMessageHandlers/UdpBroadcastHandler.cpp
