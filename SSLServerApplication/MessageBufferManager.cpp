@@ -1,7 +1,11 @@
 ﻿#include "MessageBufferManager.h"
 #include <cstring>
-#include <winsock2.h>
 #include <iostream>
+#ifdef _WIN32
+    #include <winsock2.h>
+#else
+    #include <arpa/inet.h>
+#endif
 //#include <arpa/inet.h> // 리눅스용 (윈도는 winsock2.h에서 ntohl)
 
 void MessageBufferManager::append(const char* data, size_t len) {

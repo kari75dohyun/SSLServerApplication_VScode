@@ -1,7 +1,8 @@
 {
     "cmake.sourceDirectory": "D:/Study/SSLServerApplication_VScode/SSLServerApplication",
     "files.associations": {
-        "thread": "cpp"
+        "thread": "cpp",
+        "xstring": "cpp"
     },
     "cmake.configureSettings": {
         "CMAKE_TOOLCHAIN_FILE": "C:/Users/fireg/Downloads/vcpkg-2025.04.09/scripts/buildsystems/vcpkg.cmake",
