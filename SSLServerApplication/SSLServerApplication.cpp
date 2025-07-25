@@ -14,6 +14,8 @@ using namespace std;
 using boost::asio::ip::tcp;
 using namespace boost::asio;
 
+constexpr short TCP_PORT = 12345; // 서버 포트
+constexpr unsigned short UDP_PORT = 54321; // UDP 포트
 constexpr size_t POOL_SIZE = 1024; // 원하는 값으로!
 constexpr size_t MAX_POOL_SIZE = 10000;  // session 풀을 1024개가 넘으면 자동 증가 하지만, max 사이즈 만큼은 못넘게 한다.
 
@@ -42,13 +44,13 @@ int main() {
 
         // 4. 세션풀, 서버 등 생성
         auto session_pool = std::make_shared<SessionPool>(POOL_SIZE, MAX_POOL_SIZE, io, context, data_handler);
-        SSLServer server(io, 12345, context, data_handler, session_pool);
+        SSLServer server(io, TCP_PORT, context, data_handler, session_pool);
 
         // 5. === 여기에서 글로벌 keepalive 타이머 루프 시작 ===
         //data_handler->start_keepalive_loop();  // 클라가 하트비트 보내는 구조로 변경됨 DataHandler 생성자에서 호출해버림
 
         // 6. UDP 등 기타 서버 준비
-        UDPManager udp_manager(io, 54321, data_handler); // UDP 매니저 생성
+        UDPManager udp_manager(io, UDP_PORT, data_handler); // UDP 매니저 생성
 
         cout << "SSL Echo Server started on port 12345" << endl;
         //LOG_INFO("SSL Echo Server started on port 12345");
