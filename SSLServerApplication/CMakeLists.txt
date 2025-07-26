@@ -29,6 +29,7 @@ set(SOURCES
     UDPMessageHandlers/UdpBroadcastZoneHandler.cpp
     UDPMessageHandlers/UdpHandler.cpp
     UDPMessageHandlers/UdpRegisterHandler.cpp
+    MemoryTracker.cpp
 )
 
 add_executable(server ${SOURCES})
