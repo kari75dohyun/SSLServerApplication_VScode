@@ -1,5 +1,7 @@
 ﻿#include "SessionManager.h"
 #include "Logger.h"
+#include <chrono>
+#include "AppContext.h"
 
 SessionManager::SessionManager(size_t shard_count)
     : shard_count_(shard_count),
@@ -8,11 +10,11 @@ SessionManager::SessionManager(size_t shard_count)
 {
 }
 
-void SessionManager::add_session(std::shared_ptr<SSLSession> session) {
+void SessionManager::add_session(std::shared_ptr<Session> session) {
     int session_id = session->get_session_id();
     int shard = get_shard(session_id);
 
-    std::shared_ptr<SSLSession> replaced_session;
+    std::shared_ptr<Session> replaced_session;
     {
         std::lock_guard<std::mutex> lock(session_mutexes_[shard]);
         auto& bucket = session_buckets_[shard];
@@ -31,9 +33,9 @@ void SessionManager::add_session(std::shared_ptr<SSLSession> session) {
     }
 }
 
-std::shared_ptr<SSLSession> SessionManager::remove_session(int session_id) {
+std::shared_ptr<Session> SessionManager::remove_session(int session_id) {
     int shard = get_shard(session_id);
-    std::shared_ptr<SSLSession> removed_session;
+    std::shared_ptr<Session> removed_session;
     {
         std::lock_guard<std::mutex> lock(session_mutexes_[shard]);
         auto it = session_buckets_[shard].find(session_id);
@@ -45,7 +47,7 @@ std::shared_ptr<SSLSession> SessionManager::remove_session(int session_id) {
     return removed_session;
 }
 
-std::shared_ptr<SSLSession> SessionManager::find_session(int session_id) {
+std::shared_ptr<Session> SessionManager::find_session(int session_id) {
     int shard = get_shard(session_id);
     std::lock_guard<std::mutex> lock(session_mutexes_[shard]);
     auto it = session_buckets_[shard].find(session_id);
@@ -54,9 +56,9 @@ std::shared_ptr<SSLSession> SessionManager::find_session(int session_id) {
     return nullptr;
 }
 
-void SessionManager::for_each_session(const std::function<void(const std::shared_ptr<SSLSession>&)>& fn) {
+void SessionManager::for_each_session(const std::function<void(const std::shared_ptr<Session>&)>& fn) {
     // 내부 샤드별 락 + 전체 세션 복사(락 보장)
-    std::vector<std::shared_ptr<SSLSession>> sessions;
+    std::vector<std::shared_ptr<Session>> sessions;
     for (unsigned int shard = 0; shard < shard_count_; ++shard) {
         std::lock_guard<std::mutex> lock(session_mutexes_[shard]);
         for (const auto& [id, sess] : session_buckets_[shard]) {
@@ -79,8 +81,8 @@ size_t SessionManager::session_count() {
 }
 
 // 닉네임 관리
-void SessionManager::register_nickname(const std::string& nickname, std::shared_ptr<SSLSession> session) {
-    g_logger->info("[DEBUG][TCP] SessionManager address: {}", (void*)this);
+void SessionManager::register_nickname(const std::string& nickname, std::shared_ptr<Session> session) {
+    AppContext::instance().logger->info("[DEBUG][TCP] SessionManager address: {}", (void*)this);
     std::lock_guard<std::mutex> lock(nickname_mutex_);
     auto it = nickname_index_.find(nickname);
     if (it != nickname_index_.end()) {
@@ -97,7 +99,7 @@ void SessionManager::register_nickname(const std::string& nickname, std::shared_
     nickname_index_[nickname] = session; // 무조건 overwrite (단, unregister시 “소유자”만 삭제)
 }
 
-void SessionManager::unregister_nickname(const std::string& nickname, std::shared_ptr<SSLSession> session) {
+void SessionManager::unregister_nickname(const std::string& nickname, std::shared_ptr<Session> session) {
     std::lock_guard<std::mutex> lock(nickname_mutex_);
     auto it = nickname_index_.find(nickname);
     if (it != nickname_index_.end()) {
@@ -109,7 +111,7 @@ void SessionManager::unregister_nickname(const std::string& nickname, std::share
 	cleanup_expired_nicknames();  // 만료된 닉네임 정리
 }
 
-std::shared_ptr<SSLSession> SessionManager::find_session_by_nickname(const std::string& nickname) {
+std::shared_ptr<Session> SessionManager::find_session_by_nickname(const std::string& nickname) {
     std::lock_guard<std::mutex> lock(nickname_mutex_);
     auto it = nickname_index_.find(nickname);
     if (it != nickname_index_.end()) {
@@ -131,10 +133,30 @@ void SessionManager::cleanup_expired_nicknames() {
     std::lock_guard<std::mutex> lock(nickname_mutex_);
     for (auto it = nickname_index_.begin(); it != nickname_index_.end(); ) {
         if (it->second.expired()) {
-            g_logger->info("[NICKNAME SWEEP] expired nickname entry removed: {}", it->first);
+            AppContext::instance().logger->info("[NICKNAME SWEEP] expired nickname entry removed: {}", it->first);
             it = nickname_index_.erase(it);
         }
         else {
+            ++it;
+        }
+    }
+}
+
+void SessionManager::cleanup_inactive_sessions(std::chrono::seconds max_idle_time) {
+    auto now = std::chrono::steady_clock::now();
+    for (size_t shard = 0; shard < shard_count_; ++shard) {
+        std::lock_guard<std::mutex> lock(session_mutexes_[shard]);
+        for (auto it = session_buckets_[shard].begin(); it != session_buckets_[shard].end(); ) {
+            auto& session = it->second;
+            if (session) {
+                auto last_alive = session->get_last_alive_time();
+                if (now - last_alive > max_idle_time) {
+                    AppContext::instance().logger->info("[SessionManager] 세션 {} 비활성 시간 초과, 종료 처리", session->get_session_id());
+                    session->close_session();
+                    it = session_buckets_[shard].erase(it);
+                    continue;
+                }
+            }
             ++it;
         }
     }

@@ -7,10 +7,11 @@
 
 class ZoneManager {
 public:
-    ZoneManager(boost::asio::io_context& io, int zone_count = 10);
+    ZoneManager(boost::asio::io_context& io, int zone_count);
 
-    std::shared_ptr<Zone> get_or_create_zone(int zone_id, size_t max_sessions = 300);
+    std::shared_ptr<Zone> enter_zone(int zone_id);
     std::shared_ptr<Zone> get_zone(int zone_id);
+    void remove_session(const std::shared_ptr<Session>& sess);
     void remove_zone(int zone_id);
 
     template<typename Func>

@@ -2,15 +2,16 @@
 #include "DataHandler.h"
 #include "MessageBufferManager.h"
 #include <boost/asio.hpp>
-#include <boost/asio/ssl.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <memory>
 #include <string>
 #include <queue>
 #include <optional>
+#include "Zone.h"
 
 class DataHandler;  // 전방 선언: DataHandler 클래스
+class Zone;
 
 enum class SessionState { Handshaking, Handshaked, LoginWait, Ready, Closed };
 
@@ -18,18 +19,18 @@ const int kMaxCloseRetries = 3;   // 재시도 횟수
 const int kRetryDelayMs = 100;  // 재시도 간격(ms)
 
 // SSL 세션을 관리하는 클래스
-class SSLSession : public std::enable_shared_from_this<SSLSession> {
+class Session : public std::enable_shared_from_this<Session> {
 private:
-    static constexpr size_t MAX_TASK_QUEUE = 1000;
-    static constexpr int LOGIN_TIMEOUT_SECONDS = 90;  // 로그인 제한(초)
+    //static constexpr size_t max_task_queue = 1000;
+    //static constexpr int login_timeout_seconds = 90;  // 로그인 제한(초)
 
     size_t write_queue_overflow_count_ = 0;          // 연속 overflow count
 
-    static constexpr size_t kMaxWriteQueueSize = 100;            // 임계치2: queue 최대 길이
-    static constexpr size_t kWriteQueueWarnThreshold = 80;       // 임계치1: 경고 임계(80%)
-    static constexpr size_t kWriteQueueOverflowLimit = 10;       // 임계치3: 연속 FULL 세션 종료 한계
+    //static constexpr size_t max_write_queue_size = 100;            // 임계치2: queue 최대 길이
+    //static constexpr size_t write_queue_warn_threshold = 80;       // 임계치1: 경고 임계(80%)
+    //static constexpr size_t write_queue_overflow_limit = 10;       // 임계치3: 연속 FULL 세션 종료 한계
 
-    boost::asio::ssl::stream<boost::asio::ip::tcp::socket> socket_;  // SSL 스트림을 사용한 소켓
+    boost::asio::ip::tcp::socket socket_;                            // 소켓
     boost::asio::strand<boost::asio::any_io_executor> strand_;       // 수정된 strand_ 타입
     char data_[2048];                                                // 데이터를 읽을 버퍼
     std::string message_;                                            // 서버에서 보낼 메시지를 저장하는 변수 
@@ -46,7 +47,6 @@ private:
     std::queue<std::shared_ptr<std::string>> write_queue_;
     bool write_in_progress_ = false;                                 // 현재 write 중인지
     std::atomic<bool> closed_{ false };                              // 중복 종료 방지 플래그 추가
-    boost::asio::ssl::context& ssl_context_;
 
     boost::asio::steady_timer login_timer_;                          // 닉네임 입력 타이머
     std::atomic<bool> nickname_registered_{ false };                 // 닉네임 입력 상태 플래그
@@ -79,10 +79,22 @@ private:
     std::atomic<uint64_t> generation_{ 0 };   // generation: reset시 증가
     std::atomic<bool> active_{ false };   // 활성 세션 여부
 
+    // UDP Flood 방지 관련
+    // Token Bucket용 멤버
+    int udpTokens_ = 120;  // 초기 토큰 수
+    const int maxTokens_ = 120;  // 최대 버킷 용량
+    const int refillRatePerSec_ = 60;  // 초당 토큰 충전량
+    std::chrono::steady_clock::time_point lastUdpTokenRefill_ = std::chrono::steady_clock::now();
+    
+    std::weak_ptr<Zone> zone_;  
+
+    std::function<void(std::shared_ptr<Session>)> release_callback_;
+    std::atomic<bool> released_{ false };
+
 public:
     // 생성자: 클라이언트 소켓과 SSL 컨텍스트를 받아 SSL 스트림을 초기화
-    SSLSession(boost::asio::ip::tcp::socket socket, boost::asio::ssl::context& context, int session_id, std::weak_ptr<DataHandler> data_handler);
-    ~SSLSession();
+    Session(boost::asio::ip::tcp::socket socket, int session_id, std::weak_ptr<DataHandler> data_handler);
+    ~Session();
 
     // 세션 시작: 핸드쉐이크 수행
     void start();
@@ -102,7 +114,7 @@ public:
     void set_message(std::string&& message) { message_ = std::move(message); }
 
     // Getter for socket_  
-    boost::asio::ssl::stream<boost::asio::ip::tcp::socket>& get_socket() { return socket_; }
+    boost::asio::ip::tcp::socket& get_socket() { return socket_; }
 
     boost::asio::strand<boost::asio::any_io_executor>& get_strand() { return strand_; }  // 수정된 반환 타입
 
@@ -192,18 +204,21 @@ public:
 	}
 
     // UDP Flood 방지 관련
-    void set_udp_packet_count(size_t count) { udp_packet_count_ = count; }
-    const size_t get_udp_packet_count() const { return udp_packet_count_.load(); }
-    void inc_udp_packet_count() { ++udp_packet_count_; }
-    void set_udp_packet_window(const std::chrono::steady_clock::time_point& window) {
-        udp_packet_window_ = window;
-    }
-    const std::chrono::steady_clock::time_point get_udp_packet_window() const {
-        return udp_packet_window_;
-	}
+ //   void set_udp_packet_count(size_t count) { udp_packet_count_ = count; }
+ //   const size_t get_udp_packet_count() const { return udp_packet_count_.load(); }
+ //   void inc_udp_packet_count() { ++udp_packet_count_; }
+ //   void set_udp_packet_window(const std::chrono::steady_clock::time_point& window) {
+ //       udp_packet_window_ = window;
+ //   }
+ //   const std::chrono::steady_clock::time_point get_udp_packet_window() const {
+ //       return udp_packet_window_;
+	//}
 
     void set_zone_id(int zone_id) { zone_id_ = zone_id; }
     int get_zone_id() const { return zone_id_; }
+    void set_zone(std::weak_ptr<Zone> zone) { zone_ = std::move(zone); } // 존 설정
+    std::shared_ptr<Zone> get_zone() const { return zone_.lock(); } // 존 가져오기
+	void clear_zone() { zone_.reset(); } // 존 초기화
 
     void enqueue_write(std::shared_ptr<std::string> msg);
 
@@ -215,8 +230,20 @@ public:
 
     boost::asio::steady_timer retry_timer_;  // 재시도 타이머
     void close_session();
-    void do_handshake(int retry_count = 0);
+    //void do_handshake(int retry_count = 0);
     void do_read();
+
+    //UDP Flood 방지 관련
+    bool checkUdpRateLimit();  // UDP 제한 체크 함수
+
+    void set_release_callback(std::function<void(std::shared_ptr<Session>)> cb) {
+        release_callback_ = std::move(cb);
+    }
+
+    bool is_released() const { return released_.load(); }
+    void mark_released() { released_.exchange(true); }
+
+    void cleanup();
 
 private:
     void do_write_queue();

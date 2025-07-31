@@ -1,11 +1,11 @@
 ﻿#include "../MessageHandlers/ChatHandler.h"
-#include "../SSLSession.h"
+#include "../Session.h"
 #include "../DataHandler.h"
 #include "../Logger.h"
 #include "../Utility.h"
 
 
-void chat_handler(std::shared_ptr<SSLSession> session,
+void chat_handler(std::shared_ptr<Session> session,
     const nlohmann::json& msg,
     DataHandler* handler)
 {

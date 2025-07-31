@@ -2,15 +2,16 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C++ Launch (Windows)",
+      "name": "Launch CMake Server",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/x64/Debug/SSLServerApplication.exe",
+      "program": "${workspaceFolder}/build/Debug/server.exe",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "${workspaceFolder}/x64/Debug",
+      "cwd": "${workspaceFolder}/build/Debug",
       "environment": [],
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "preLaunchTask": "build sln"
     }
   ]
 }

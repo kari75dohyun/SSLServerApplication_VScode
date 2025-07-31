@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿// MemoryTracker.h
+#pragma once
 #include <string>
 
 class MemoryTracker {

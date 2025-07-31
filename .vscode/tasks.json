@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\msbuild.exe",
       "args": [
-        "SSLServerApplication.sln",
+        "D:/Study/ServerApplication_VScode/ServerApplication.sln",
         "/p:Configuration=Debug"
       ],
       "group": {

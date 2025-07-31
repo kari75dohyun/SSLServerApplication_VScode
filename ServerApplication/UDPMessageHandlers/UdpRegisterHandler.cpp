@@ -1,11 +1,12 @@
 ﻿#include "../UDPMessageHandlers/UdpRegisterHandler.h"
-#include "../SSLSession.h"
+#include "../Session.h"
 #include "../DataHandler.h"
 #include "../Logger.h"
 #include "../Utility.h"
+#include "../AppContext.h"
 
 
-void Udpregister_handler(std::shared_ptr<SSLSession> session, const nlohmann::json& msg,
+void Udpregister_handler(std::shared_ptr<Session> session, const nlohmann::json& msg,
     const boost::asio::ip::udp::endpoint& from, boost::asio::ip::udp::socket& udp_socket)
 {
     // 별도 응답 필요시 이 곳에서 UDP로 전송
@@ -19,11 +20,11 @@ void Udpregister_handler(std::shared_ptr<SSLSession> session, const nlohmann::js
     response["token"] = udp_token;
     response["nickname"] = msg.value("nickname", "anonymity");
 
-    g_logger->info("[DEBUG][UDP] 응답 전송 - endpoint: {}:{}", from.address().to_string(), from.port());
+    AppContext::instance().logger->info("[DEBUG][UDP] 응답 전송 - endpoint: {}:{}", from.address().to_string(), from.port());
     auto data = std::make_shared<std::string>(response.dump());
     udp_socket.async_send_to(
         boost::asio::buffer(*data), from,
         [data](const boost::system::error_code& ec, std::size_t bytes) {
-            if (ec) g_logger->error("[UDP][send_to callback] Error 5: {}", ec.message());
+            if (ec) AppContext::instance().logger->error("[UDP][send_to callback] Error 5: {}", ec.message());
         });
 }

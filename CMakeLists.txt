@@ -9,26 +9,27 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
-    SSLServerApplication.cpp
-    DataHandler.cpp
-    SSLSession.cpp
-    SessionPool.cpp
-    SessionManager.cpp
-    MessageDispatcher.cpp
-    UDPManager.cpp
-    Logger.cpp
-    Utility.cpp
-    Zone.cpp
-    ZoneManager.cpp
-    SSLServer.cpp
-    MessageBufferManager.cpp
-    MessageHandlers/ChatHandler.cpp
-    MessageHandlers/CertifyHandler.cpp
-    MessageHandlers/KeepaliveHandler.cpp
-    UDPMessageHandlers/UdpBroadcastHandler.cpp
-    UDPMessageHandlers/UdpBroadcastZoneHandler.cpp
-    UDPMessageHandlers/UdpHandler.cpp
-    UDPMessageHandlers/UdpRegisterHandler.cpp
+    ServerApplication/ServerApplication.cpp
+    ServerApplication/DataHandler.cpp
+    ServerApplication/Session.cpp
+    ServerApplication/SessionPool.cpp
+    ServerApplication/SessionManager.cpp
+    ServerApplication/MessageDispatcher.cpp
+    ServerApplication/UDPManager.cpp
+    ServerApplication/Logger.cpp
+    ServerApplication/Utility.cpp
+    ServerApplication/Zone.cpp
+    ServerApplication/ZoneManager.cpp
+    ServerApplication/Server.cpp
+    ServerApplication/MessageBufferManager.cpp
+    ServerApplication/MessageHandlers/ChatHandler.cpp
+    ServerApplication/MessageHandlers/CertifyHandler.cpp
+    ServerApplication/MessageHandlers/KeepaliveHandler.cpp
+    ServerApplication/UDPMessageHandlers/UdpBroadcastHandler.cpp
+    ServerApplication/UDPMessageHandlers/UdpBroadcastZoneHandler.cpp
+    ServerApplication/UDPMessageHandlers/UdpHandler.cpp
+    ServerApplication/UDPMessageHandlers/UdpRegisterHandler.cpp
+    ServerApplication/MemoryTracker.cpp
 )
 
 add_executable(server ${SOURCES})
@@ -50,3 +51,5 @@ target_link_libraries(server PRIVATE CURL::libcurl)
 
 find_package(Threads REQUIRED)
 target_link_libraries(server PRIVATE Threads::Threads)
+
+add_definitions(-D_WIN32_WINNT=0x0A00)  # Windows 10

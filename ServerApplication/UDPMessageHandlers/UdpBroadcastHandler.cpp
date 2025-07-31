@@ -1,11 +1,11 @@
 ﻿#include "../UDPMessageHandlers/UdpBroadcastHandler.h"
-#include "../SSLSession.h"
+#include "../Session.h"
 #include "../DataHandler.h"
 #include "../Logger.h"
 #include "../Utility.h"
 
 
-void Udpbroadcast_handler(std::shared_ptr<SSLSession> session, const nlohmann::json& msg,
+void Udpbroadcast_handler(std::shared_ptr<Session> session, const nlohmann::json& msg,
     const boost::asio::ip::udp::endpoint& from, boost::asio::ip::udp::socket& udp_socket, DataHandler* handler)
 {
     if (handler) {

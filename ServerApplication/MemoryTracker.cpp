@@ -1,5 +1,6 @@
 ﻿#include "MemoryTracker.h"
 #include "Logger.h"
+#include "AppContext.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -28,5 +29,5 @@ std::string MemoryTracker::get_memory_usage() {
 #endif
 
 void MemoryTracker::log_memory_usage() {
-    g_logger->info("[MEM] {}", get_memory_usage());
+    AppContext::instance().logger->info("[MEM] {}", get_memory_usage());
 }

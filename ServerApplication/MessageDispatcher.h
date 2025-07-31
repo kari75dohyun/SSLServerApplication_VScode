@@ -5,20 +5,20 @@
 #include <nlohmann/json.hpp>
 #include <boost/asio.hpp>
 
-class SSLSession;
+class Session;
 class DataHandler;
 class SessionManager; // 전방 선언
 
 class MessageDispatcher {
 public:
-    using HandlerFunc = std::function<void(std::shared_ptr<SSLSession>, const nlohmann::json&)>;
-    using UdpHandlerFunc = std::function<void(std::shared_ptr<SSLSession>, const nlohmann::json&, const boost::asio::ip::udp::endpoint&, boost::asio::ip::udp::socket&)>;
+    using HandlerFunc = std::function<void(std::shared_ptr<Session>, const nlohmann::json&)>;
+    using UdpHandlerFunc = std::function<void(std::shared_ptr<Session>, const nlohmann::json&, const boost::asio::ip::udp::endpoint&, boost::asio::ip::udp::socket&)>;
 
     MessageDispatcher(DataHandler* handler, SessionManager* sessionmanager); // DataHandler 포인터 주입
 
-    void dispatch(std::shared_ptr<SSLSession> session, const nlohmann::json& msg);
+    void dispatch(std::shared_ptr<Session> session, const nlohmann::json& msg);
 
-    void dispatch_udp(std::shared_ptr<SSLSession> session, const std::string& raw_msg,
+    void dispatch_udp(std::shared_ptr<Session> session, const std::string& raw_msg,
         const boost::asio::ip::udp::endpoint& from, boost::asio::ip::udp::socket& udp_socket);
 
     void register_handler(const std::string& type, HandlerFunc handler);

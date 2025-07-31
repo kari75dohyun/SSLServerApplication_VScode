@@ -19,18 +19,24 @@
     <Filter Include="소스 파일\MessageHandlers">
       <UniqueIdentifier>{be87c83c-5ba1-40e1-93b0-9e96f17b8bdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\UDPMessageHandlers">
+      <UniqueIdentifier>{e417647f-2b1d-460d-8d50-4546cad5c7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\UDPMessageHandlers">
+      <UniqueIdentifier>{bc50302b-97b3-43e1-b82a-8c01b9a3c553}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SSLServerApplication.cpp">
+    <ClCompile Include="ServerApplication.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="DataHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SSLServer.cpp">
+    <ClCompile Include="Server.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SSLSession.cpp">
+    <ClCompile Include="Session.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="UDPManager.cpp">
@@ -63,12 +69,33 @@
     <ClCompile Include="MessageHandlers\ChatHandler.cpp">
       <Filter>소스 파일\MessageHandlers</Filter>
     </ClCompile>
+    <ClCompile Include="MessageHandlers\CertifyHandler.cpp">
+      <Filter>소스 파일\MessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="UDPMessageHandlers\UdpHandler.cpp">
+      <Filter>소스 파일\UDPMessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="UDPMessageHandlers\UdpBroadcastHandler.cpp">
+      <Filter>소스 파일\UDPMessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="UDPMessageHandlers\UdpRegisterHandler.cpp">
+      <Filter>소스 파일\UDPMessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="UDPMessageHandlers\UdpBroadcastZoneHandler.cpp">
+      <Filter>소스 파일\UDPMessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHandlers\KeepaliveHandler.cpp">
+      <Filter>소스 파일\MessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryTracker.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SSLServer.h">
+    <ClInclude Include="Server.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SSLSession.h">
+    <ClInclude Include="Session.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="UDPManager.h">
@@ -103,6 +130,30 @@
     </ClInclude>
     <ClInclude Include="MessageHandlers\ChatHandler.h">
       <Filter>헤더 파일\MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHandlers\CertifyHandler.h">
+      <Filter>헤더 파일\MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHandlers\KeepaliveHandler.h">
+      <Filter>헤더 파일\MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="UDPMessageHandlers\UdpHandler.h">
+      <Filter>헤더 파일\UDPMessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="UDPMessageHandlers\UdpBroadcastHandler.h">
+      <Filter>헤더 파일\UDPMessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="UDPMessageHandlers\UdpRegisterHandler.h">
+      <Filter>헤더 파일\UDPMessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="UDPMessageHandlers\UdpBroadcastZoneHandler.h">
+      <Filter>헤더 파일\UDPMessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryTracker.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AppContext.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

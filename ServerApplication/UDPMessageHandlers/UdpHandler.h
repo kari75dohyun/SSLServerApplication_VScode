@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <boost/asio.hpp>
 
-class SSLSession;
+class Session;
 
-void Udp_handler(std::shared_ptr<SSLSession> session, const nlohmann::json& msg, 
+void Udp_handler(std::shared_ptr<Session> session, const nlohmann::json& msg, 
 	const boost::asio::ip::udp::endpoint& from, boost::asio::ip::udp::socket& udp_socket);

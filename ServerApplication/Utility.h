@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "SSLSession.h"
+#include "Session.h"
 #include <string>
 #include <random>
 #include <sstream>
@@ -12,17 +12,22 @@
 #include <atomic>
 #include <chrono>
 #include <thread>
-extern nlohmann::json g_config;
+#include "AppContext.h"
+//extern nlohmann::json g_config;
 
-class SSLSession; // 전방 선언
+class Session; // 전방 선언
 
-constexpr int UDP_SHARD_COUNT = 16;
+constexpr int UDP_SHARD_COUNT = 16;   // 컴파일 타입이라 고정값 사용
 
 struct UdpRateLimiterShard {
-    std::array<std::atomic<size_t>, UDP_SHARD_COUNT> counts;
-    std::array<std::atomic<int64_t>, UDP_SHARD_COUNT> window_secs;
-    UdpRateLimiterShard() {
-        for (int i = 0; i < UDP_SHARD_COUNT; ++i) {
+    std::vector<std::atomic<size_t>> counts;
+    std::vector<std::atomic<int64_t>> window_secs;
+
+    // 명시적 생성자: shard_count 개수로 벡터 초기화
+    explicit UdpRateLimiterShard(size_t shard_count)
+        : counts(shard_count), window_secs(shard_count)
+    {
+        for (size_t i = 0; i < shard_count; ++i) {
             counts[i].store(0);
             window_secs[i].store(0);
         }
@@ -50,7 +55,7 @@ inline std::optional<nlohmann::json> try_parse_json(const std::string& msg) {
         return nlohmann::json::parse(msg);
     }
     catch (const std::exception& e) {
-        g_logger->info("[UDP] JSON Parse failed: {} / original: {}", e.what(), msg);
+        AppContext::instance().logger->info("[UDP] JSON Parse failed: {} / original: {}", e.what(), msg);
         return std::nullopt;
     }
 }
@@ -72,7 +77,7 @@ inline std::optional<nlohmann::json> try_parse_json(const std::string& msg) {
 //    return total_count <= limit_per_sec;
 //}
 
-bool check_user_udp_rate_limit(SSLSession& sess, size_t user_limit); 
+//bool check_user_udp_rate_limit(Session& sess, size_t user_limit); 
 
 inline bool sharded_udp_rate_limit(UdpRateLimiterShard& limiter, size_t limit_per_sec) {
     using namespace std::chrono;
@@ -96,4 +101,4 @@ inline bool sharded_udp_rate_limit(UdpRateLimiterShard& limiter, size_t limit_pe
 
 std::string get_env_secret(const std::string& env_name);
 
-nlohmann::json load_config(const std::string& path = "config.json");
+void load_config(const std::string& path = "config.json");
