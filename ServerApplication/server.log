@@ -1,0 +1,125 @@
+[2025-07-21 01:05:23.870] [info] === ì„œë²„ ì‹œì‘! ===
+[2025-07-21 01:05:23.929] [info] SSL Echo Server started on port 12345
+[2025-07-21 01:05:23.930] [info] Thread count: 16
+[2025-07-21 01:05:28.209] [info] [SSLSession][reset] ì„¸ì…˜ 0 ë‚´ë¶€ ìƒíƒœ ì´ˆê¸°í™” ì™„ë£Œ
+[2025-07-21 01:05:28.210] [info] [SessionPool][acquire] idx=0 (í’€ ì´ ì„¸ì…˜ ìˆ˜: 1024, ì‚¬ìš© ì¤‘: 1)
+[2025-07-21 01:05:28.210] [info] [DEBUG][TCP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:05:28.210] [info] New client connected, session ID: 0
+[2025-07-21 01:05:28.210] [info] New client: session_id=0, IP=127.0.0.1, port=13506
+[2025-07-21 01:05:28.218] [info] [keepalive] session_id= 0
+[2025-07-21 01:05:31.410] [info] [SSLSession][reset] ì„¸ì…˜ 1 ë‚´ë¶€ ìƒíƒœ ì´ˆê¸°í™” ì™„ë£Œ
+[2025-07-21 01:05:31.411] [info] [SessionPool][acquire] idx=1 (í’€ ì´ ì„¸ì…˜ ìˆ˜: 1024, ì‚¬ìš© ì¤‘: 2)
+[2025-07-21 01:05:31.411] [info] [DEBUG][TCP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:05:31.411] [info] New client connected, session ID: 1
+[2025-07-21 01:05:31.411] [info] New client: session_id=1, IP=127.0.0.1, port=13507
+[2025-07-21 01:05:31.417] [info] [keepalive] session_id= 1
+[2025-07-21 01:05:33.891] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:05:36.196] [info] [on_login] kari ì„¸ì…˜ ë“±ë¡ ì‹œë„
+[2025-07-21 01:05:36.196] [info] [DEBUG][TCP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:05:36.196] [info] [on_login] ì„¸ì…˜ ë“±ë¡ ì™„ë£Œ í›„ login_success ì „ì†¡: kari
+[2025-07-21 01:05:36.196] [info] [ZONE] ì„¸ì…˜ 0 â†’ ZONE 1 ë°°ì •
+[2025-07-21 01:05:40.334] [info] [on_login] firegum ì„¸ì…˜ ë“±ë¡ ì‹œë„
+[2025-07-21 01:05:40.334] [info] [DEBUG][TCP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:05:40.334] [info] [on_login] ì„¸ì…˜ ë“±ë¡ ì™„ë£Œ í›„ login_success ì „ì†¡: firegum
+[2025-07-21 01:05:40.334] [info] [ZONE] ì„¸ì…˜ 1 â†’ ZONE 1 ë°°ì •
+[2025-07-21 01:05:40.334] [info] [broadcast] target session_id= 0
+[2025-07-21 01:05:41.199] [info] [DEBUG][UDP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:05:41.200] [info] [DEBUG][UDP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:05:41.200] [info] [UDP] endpoint ë³€ê²½ ê°ì§€! ì´ì „: N/A:0 â†’ ì‹ ê·œ: 127.0.0.1:64695
+[2025-07-21 01:05:41.200] [info] [DEBUG][UDP] ì‘ë‹µ ì „ì†¡ - endpoint: 127.0.0.1:64695
+[2025-07-21 01:05:43.892] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:05:45.340] [info] [DEBUG][UDP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:05:45.341] [info] [DEBUG][UDP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:05:45.341] [info] [UDP] endpoint ë³€ê²½ ê°ì§€! ì´ì „: N/A:0 â†’ ì‹ ê·œ: 127.0.0.1:64696
+[2025-07-21 01:05:45.341] [info] [DEBUG][UDP] ì‘ë‹µ ì „ì†¡ - endpoint: 127.0.0.1:64696
+[2025-07-21 01:05:48.222] [info] [keepalive] session_id= 0
+[2025-07-21 01:05:51.426] [info] [keepalive] session_id= 1
+[2025-07-21 01:05:53.896] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:05:59.558] [info] [broadcast] target session_id= 0
+[2025-07-21 01:06:03.904] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:06:04.834] [info] [broadcast] target session_id= 1
+[2025-07-21 01:06:08.236] [info] [keepalive] session_id= 0
+[2025-07-21 01:06:11.431] [info] [keepalive] session_id= 1
+[2025-07-21 01:06:13.917] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:06:23.925] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:06:28.239] [info] [keepalive] session_id= 0
+[2025-07-21 01:06:31.440] [info] [keepalive] session_id= 1
+[2025-07-21 01:06:33.930] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:06:43.941] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:06:48.244] [info] [keepalive] session_id= 0
+[2025-07-21 01:06:51.447] [info] [keepalive] session_id= 1
+[2025-07-21 01:06:53.942] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:07:03.943] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:07:06.286] [info] [broadcast] target session_id= 0
+[2025-07-21 01:07:06.287] [error] [close_session] async_shutdown error: ÇöÀç ¿¬°áÀº ¿ø°İ È£½ºÆ®¿¡ ÀÇÇØ °­Á¦·Î ²÷°å½À´Ï´Ù
+[2025-07-21 01:07:08.247] [info] [keepalive] session_id= 0
+[2025-07-21 01:07:13.956] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:07:23.967] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:07:28.249] [info] [keepalive] session_id= 0
+[2025-07-21 01:07:33.971] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:07:43.985] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:07:48.252] [info] [keepalive] session_id= 0
+[2025-07-21 01:07:53.997] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:08:04.007] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:08:08.261] [info] [keepalive] session_id= 0
+[2025-07-21 01:08:14.010] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:08:24.017] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:08:28.275] [info] [keepalive] session_id= 0
+[2025-07-21 01:08:34.032] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:08:44.042] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:08:48.285] [info] [keepalive] session_id= 0
+[2025-07-21 01:08:54.047] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:09:04.062] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:09:08.296] [info] [keepalive] session_id= 0
+[2025-07-21 01:09:14.071] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:09:24.073] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:09:28.310] [info] [keepalive] session_id= 0
+[2025-07-21 01:09:34.082] [info] [SERVER] Active sessions: 1
+[2025-07-21 01:09:36.984] [error] [close_session] async_shutdown error: ÇöÀç ¿¬°áÀº ¿ø°İ È£½ºÆ®¿¡ ÀÇÇØ °­Á¦·Î ²÷°å½À´Ï´Ù
+[2025-07-21 01:09:44.083] [info] [SERVER] Active sessions: 0
+[2025-07-21 01:09:54.086] [info] [SERVER] Active sessions: 0
+[2025-07-21 01:10:04.088] [info] [SERVER] Active sessions: 0
+[2025-07-21 01:10:14.102] [info] [SERVER] Active sessions: 0
+[2025-07-21 01:10:24.116] [info] [SERVER] Active sessions: 0
+[2025-07-21 01:10:26.584] [info] [SSLSession][reset] ì„¸ì…˜ 2 ë‚´ë¶€ ìƒíƒœ ì´ˆê¸°í™” ì™„ë£Œ
+[2025-07-21 01:10:26.584] [info] [SessionPool][acquire] idx=2 (í’€ ì´ ì„¸ì…˜ ìˆ˜: 1024, ì‚¬ìš© ì¤‘: 3)
+[2025-07-21 01:10:26.584] [info] [DEBUG][TCP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:10:26.584] [info] New client connected, session ID: 2
+[2025-07-21 01:10:26.584] [info] New client: session_id=2, IP=127.0.0.1, port=13655
+[2025-07-21 01:10:26.591] [info] [keepalive] session_id= 2
+[2025-07-21 01:10:28.993] [info] [SSLSession][reset] ì„¸ì…˜ 3 ë‚´ë¶€ ìƒíƒœ ì´ˆê¸°í™” ì™„ë£Œ
+[2025-07-21 01:10:28.993] [info] [SessionPool][acquire] idx=3 (í’€ ì´ ì„¸ì…˜ ìˆ˜: 1024, ì‚¬ìš© ì¤‘: 4)
+[2025-07-21 01:10:28.993] [info] [DEBUG][TCP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:10:28.993] [info] New client connected, session ID: 3
+[2025-07-21 01:10:28.993] [info] New client: session_id=3, IP=127.0.0.1, port=13656
+[2025-07-21 01:10:28.999] [info] [keepalive] session_id= 3
+[2025-07-21 01:10:33.449] [info] [on_login] kari ì„¸ì…˜ ë“±ë¡ ì‹œë„
+[2025-07-21 01:10:33.449] [info] [DEBUG][TCP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:10:33.450] [info] [on_login] ì„¸ì…˜ ë“±ë¡ ì™„ë£Œ í›„ login_success ì „ì†¡: kari
+[2025-07-21 01:10:33.450] [info] [ZONE] ì„¸ì…˜ 2 â†’ ZONE 1 ë°°ì •
+[2025-07-21 01:10:34.118] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:10:38.462] [info] [DEBUG][UDP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:10:38.462] [info] [DEBUG][UDP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:10:38.462] [info] [UDP] endpoint ë³€ê²½ ê°ì§€! ì´ì „: N/A:0 â†’ ì‹ ê·œ: 127.0.0.1:49877
+[2025-07-21 01:10:38.462] [info] [DEBUG][UDP] ì‘ë‹µ ì „ì†¡ - endpoint: 127.0.0.1:49877
+[2025-07-21 01:10:41.773] [info] [on_login] firegum ì„¸ì…˜ ë“±ë¡ ì‹œë„
+[2025-07-21 01:10:41.773] [info] [DEBUG][TCP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:10:41.773] [info] [on_login] ì„¸ì…˜ ë“±ë¡ ì™„ë£Œ í›„ login_success ì „ì†¡: firegum
+[2025-07-21 01:10:41.773] [info] [ZONE] ì„¸ì…˜ 3 â†’ ZONE 1 ë°°ì •
+[2025-07-21 01:10:41.773] [info] [broadcast] target session_id= 2
+[2025-07-21 01:10:44.121] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:10:46.603] [info] [keepalive] session_id= 2
+[2025-07-21 01:10:46.779] [info] [DEBUG][UDP] DataHandler address: 0x142c0fd65f0
+[2025-07-21 01:10:46.779] [info] [DEBUG][UDP] SessionManager address: 0x142c0fd1110
+[2025-07-21 01:10:46.779] [info] [UDP] endpoint ë³€ê²½ ê°ì§€! ì´ì „: N/A:0 â†’ ì‹ ê·œ: 127.0.0.1:49878
+[2025-07-21 01:10:46.780] [info] [DEBUG][UDP] ì‘ë‹µ ì „ì†¡ - endpoint: 127.0.0.1:49878
+[2025-07-21 01:10:49.008] [info] [keepalive] session_id= 3
+[2025-07-21 01:10:49.711] [info] [broadcast] target session_id= 2
+[2025-07-21 01:10:54.130] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:10:55.486] [info] [broadcast] target session_id= 3
+[2025-07-21 01:11:04.137] [info] [SERVER] Active sessions: 2
+[2025-07-21 01:11:06.617] [info] [keepalive] session_id= 2
+[2025-07-21 01:11:09.017] [info] [keepalive] session_id= 3
+[2025-07-21 01:11:09.694] [info] [broadcast] target session_id= 2
+[2025-07-21 01:11:09.694] [error] [close_session] async_shutdown error: ÇöÀç ¿¬°áÀº ¿ø°İ È£½ºÆ®¿¡ ÀÇÇØ °­Á¦·Î ²÷°å½À´Ï´Ù
+[2025-07-21 01:11:10.775] [error] [close_session] async_shutdown error: ÇöÀç ¿¬°áÀº ¿ø°İ È£½ºÆ®¿¡ ÀÇÇØ °­Á¦·Î ²÷°å½À´Ï´Ù
