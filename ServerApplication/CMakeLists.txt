@@ -37,9 +37,6 @@ add_executable(server ${SOURCES})
 find_package(Boost REQUIRED COMPONENTS system thread)
 target_link_libraries(server PRIVATE Boost::system Boost::thread)
 
-find_package(OpenSSL REQUIRED)
-target_link_libraries(server PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-
 find_package(nlohmann_json 3.2.0 REQUIRED)
 target_link_libraries(server PRIVATE nlohmann_json::nlohmann_json)
 
