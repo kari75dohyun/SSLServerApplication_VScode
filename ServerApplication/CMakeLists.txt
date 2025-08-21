@@ -49,4 +49,7 @@ target_link_libraries(server PRIVATE CURL::libcurl)
 find_package(Threads REQUIRED)
 target_link_libraries(server PRIVATE Threads::Threads)
 
-add_definitions(-D_WIN32_WINNT=0x0A00)  # Windows 10
+# Windows 에서만 _WIN32_WINNT 정의
+if (WIN32)
+    add_definitions(-D_WIN32_WINNT=0x0A00)  # Windows 10
+endif()
